@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Portfolio interattivo — Federica Pierini</title>
+<style>
+
+:root{
+  --ivory:#f4efe7;
+  --paper:#fbf8f3;
+  --ink:#15120f;
+  --espresso:#2a201a;
+  --taupe:#8c7b70;
+  --gold:#b59667;
+  --line:rgba(42,32,26,.16);
+  --soft:rgba(181,150,103,.09);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(181,150,103,.08), transparent 32%),
+    var(--ivory);
+  color:var(--ink);
+}
+body:before{
+  content:"";
+  position:fixed; inset:0; pointer-events:none; opacity:.16;
+  background-image:linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px);
+  background-size:100% 4px;
+}
+.wrap{max-width:1240px;margin:auto;padding:34px 30px 58px}
+header{
+  min-height:165px;
+  display:flex;justify-content:space-between;align-items:flex-end;gap:28px;flex-wrap:wrap;
+  padding:18px 0 28px;border-bottom:1px solid var(--line)
+}
+.ey{
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--taupe);font-weight:700
+}
+h1{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:58px;font-weight:400;letter-spacing:-.035em;
+  margin:10px 0 7px;line-height:.95
+}
+.sub{color:var(--taupe);font-size:14px;letter-spacing:.02em}
+.signature{
+  font-family:Georgia,"Times New Roman",serif;
+  font-style:italic;font-size:20px;color:var(--espresso)
+}
+nav{
+  position:sticky;top:0;z-index:15;
+  display:flex;gap:24px;flex-wrap:wrap;
+  padding:18px 0 15px;margin:0 0 34px;
+  background:linear-gradient(var(--ivory) 78%,rgba(244,239,231,0));
+  backdrop-filter:blur(8px)
+}
+button,.btn{
+  font:inherit;cursor:pointer;
+  border:0;background:transparent;color:var(--ink);
+  padding:8px 0;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  transition:.25s ease
+}
+.nav{
+  position:relative;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--taupe)
+}
+.nav:after{
+  content:"";position:absolute;left:0;right:100%;bottom:1px;height:1px;background:var(--gold);transition:.25s ease
+}
+.nav:hover,.nav.active{color:var(--ink)}
+.nav.active:after,.nav:hover:after{right:0}
+main{min-height:590px}
+.hero-grid,.grid{
+  display:grid;grid-template-columns:1.12fr .88fr;gap:58px;align-items:start
+}
+.editorial-title{
+  font-family:Georgia,"Times New Roman",serif;
+  font-weight:400;font-size:48px;line-height:1.03;letter-spacing:-.025em;margin:12px 0 26px
+}
+h2{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:39px;font-weight:400;line-height:1.06;letter-spacing:-.02em;margin:10px 0 22px
+}
+h3{font-family:Georgia,"Times New Roman",serif;font-size:22px;font-weight:400;margin:7px 0}
+p{line-height:1.85;color:#625a53;font-size:15px;margin:0 0 16px}
+strong{color:var(--ink)}
+.panel{
+  background:rgba(251,248,243,.66);
+  border:1px solid var(--line);
+  border-radius:0;
+  padding:32px;
+  box-shadow:0 16px 45px rgba(45,34,25,.045)
+}
+.quote-panel{
+  min-height:410px;display:flex;flex-direction:column;justify-content:space-between;
+  border-top:1px solid var(--gold);padding-top:28px
+}
+.big-word{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:46px;font-weight:400;line-height:1.13;letter-spacing:-.02em;color:var(--espresso)
+}
+.mini-rule{width:46px;height:1px;background:var(--gold);margin:22px 0}
+.tags{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--taupe);line-height:1.8}
+.timeline{
+  display:grid;grid-template-columns:94px 18px 1fr;gap:18px;padding:0 0 34px;position:relative
+}
+.timeline .year{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--taupe);padding-top:4px}
+.timeline .track{position:relative}
+.timeline .dot{width:8px;height:8px;border:1px solid var(--gold);background:var(--ivory);border-radius:50%;margin-top:6px}
+.timeline .track:after{
+  content:"";position:absolute;width:1px;background:var(--line);left:3px;top:17px;bottom:-27px
+}
+.timeline:last-child .track:after{display:none}
+.timeline .city{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.timeline .desc{color:var(--taupe);font-size:14px;line-height:1.6}
+.project-layout{display:grid;grid-template-columns:270px 1fr;gap:42px}
+.project-list{display:grid;align-content:start;border-top:1px solid var(--line)}
+.project{
+  padding:17px 2px;border-radius:0;text-align:left;border-bottom:1px solid var(--line);
+  color:var(--taupe)
+}
+.project strong{display:block;font-family:Georgia,"Times New Roman",serif;font-size:18px;font-weight:400}
+.project small{display:block;color:var(--taupe);margin-top:6px;line-height:1.35}
+.project.active{color:var(--ink)}
+.project.active strong{color:var(--gold)}
+.project-card,.project-panel{padding:0;background:transparent;border:0;box-shadow:none}
+.project-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:18px}
+.project-number{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:36px;color:var(--gold)}
+.preview-wrap{
+  margin:22px 0 26px;background:#12100f;padding:18px;position:relative;overflow:hidden
+}
+.preview-wrap:before{
+  content:"";position:absolute;inset:0;border:1px solid rgba(255,255,255,.13);pointer-events:none
+}
+.preview{
+  width:100%;height:390px;object-fit:contain;display:block;background:#0f0e0d
+}
+.focus{
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  margin-top:24px;padding:18px 0
+}
+.actions{display:flex;flex-wrap:wrap;gap:18px;margin-top:22px}
+.btn.primary{
+  background:var(--espresso);color:#fff;padding:13px 18px;border:1px solid var(--espresso);
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase
+}
+.btn.primary:hover{background:var(--gold);border-color:var(--gold)}
+.openpdf:not(.primary){
+  border-bottom:1px solid var(--gold);font-size:11px;letter-spacing:.08em;text-transform:uppercase
+}
+.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:22px}
+.gcard{
+  background:rgba(251,248,243,.75);border:1px solid var(--line);padding:12px;
+  transition:transform .25s ease,box-shadow .25s ease
+}
+.gcard:hover{transform:translateY(-3px);box-shadow:0 16px 28px rgba(42,32,26,.07)}
+.gcard img{width:100%;height:210px;object-fit:contain;background:#f7f4ef;display:block;margin-bottom:12px}
+.gcard strong{font-family:Georgia,"Times New Roman",serif;font-size:17px;font-weight:400}
+.gcard .btn{width:100%;justify-content:flex-start;margin-top:8px}
+.contact-card{
+  border-top:1px solid var(--gold);padding-top:25px
+}
+.contact-name{
+  font-family:Georgia,"Times New Roman",serif;font-size:30px;font-weight:400;margin-bottom:6px
+}
+.contactline{margin-top:22px;line-height:2;color:var(--taupe)}
+.contactline a{color:var(--espresso);text-decoration:none;border-bottom:1px solid var(--gold)}
+.modal{display:none;position:fixed;inset:0;background:rgba(15,12,10,.88);z-index:50;padding:24px}
+.modal.open{display:flex}
+.modalbox{
+  background:var(--paper);overflow:hidden;width:min(1180px,100%);height:calc(100vh - 48px);
+  margin:auto;display:flex;flex-direction:column;border:1px solid rgba(181,150,103,.35)
+}
+.modalhead{
+  display:flex;justify-content:space-between;align-items:center;padding:12px 18px;
+  border-bottom:1px solid var(--line)
+}
+.modalhead strong{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:18px}
+iframe{border:0;width:100%;flex:1;background:#ddd}
+footer{
+  margin-top:46px;border-top:1px solid var(--line);padding-top:16px;
+  font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--taupe)
+}
+@media(max-width:800px){
+  .wrap{padding:22px 18px 40px}h1{font-size:44px}.editorial-title{font-size:39px}
+  .hero-grid,.grid,.project-layout{grid-template-columns:1fr;gap:30px}
+  nav{gap:15px}.timeline{grid-template-columns:74px 15px 1fr}
+  .preview{height:270px}.gallery{grid-template-columns:1fr}
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<div><div class="ey">Portfolio · Selected Works 2024–2026</div><h1>Federica Pierini</h1><div class="sub">Marketing · Brand Communication · Digital Strategy · AI</div></div>
+<div class="signature">Dalla strategia all’esecuzione</div>
+</header>
+<nav>
+<button class="nav active" data-section="about">Chi sono</button>
+<button class="nav" data-section="journey">Il mio percorso</button>
+<button class="nav" data-section="works">Progetti</button>
+<button class="nav" data-section="contact">Contatti</button>
+</nav>
+<main id="content"></main>
+<footer>Portfolio personale · Federica Pierini</footer>
+</div>
+
+<div class="modal" id="pdfModal" aria-hidden="true">
+<div class="modalbox">
+<div class="modalhead"><strong id="modalTitle">Progetto completo</strong><button id="closeModal">Chiudi ×</button></div>
+<iframe id="pdfFrame" title="PDF progetto"></iframe>
+</div>
+</div>
+
+<script>
+const PDFS={"missoni": "projects/missoni-design-week.pdf", "officina": "projects/officina-milano.pdf", "triplea": "projects/velier-triple-a.pdf", "gift": "projects/gift-voucher.pdf", "card": "projects/biglietto-da-visita.pdf", "loyalty": "projects/carta-fedelta.pdf", "camping": "projects/flyer-campeggio.pdf", "promo": "projects/promo-natale.pdf"};
+const IMGS={"missoni": "images/missoni.jpg", "officina": "images/officina.jpg", "triplea": "images/triplea.jpg", "gift": "images/gift.jpg", "card": "images/card.jpg", "loyalty": "images/loyalty.jpg", "camping": "images/camping.jpg"};
+const projects={"missoni": {"title": "Missoni Home × Design Week 2026", "sub": "Waving the Unseen — Esperienza di brand immersiva", "meta": "IULM · Progetto accademico di gruppo · 2026", "desc": "Sviluppo di un’esperienza di brand per la Milano Design Week, pensata per integrare spazio fisico, realtà aumentata e intelligenza artificiale e rendere l’esperienza più interattiva e condivisibile.", "focus": "Brand Experience · Concept Evento · Customer Journey", "pdf": "missoni", "thumb": "missoni"}, "officina": {"title": "Officina Milano", "sub": "Strategia phygital per un cocktail bar milanese", "meta": "IULM · LAB AI Certification", "desc": "Progetto focalizzato sull’estensione digitale dell’esperienza di marca attraverso un ecosistema direct-to-consumer e una soluzione e-commerce cloud-based.", "focus": "Food & Beverage · Strategia Phygital · Customer Experience", "pdf": "officina", "thumb": "officina"}, "triplea": {"title": "Velier · Triple A", "sub": "Business Model & Strategia Digitale", "meta": "IULM · Progetto accademico", "desc": "Analisi strategica di una realtà del settore wine & spirits, con focus su identità di marca, trasformazione digitale e relazione tra brand e consumatore.", "focus": "Food & Beverage · Brand Strategy · Digital Transformation", "pdf": "triplea", "thumb": "triplea"}, "andrea": {"title": "Budda Mani d’Oro", "sub": "Comunicazione offline · Progetto reale", "meta": "Cliente reale · Comunicazione e materiali stampa", "desc": "Ideazione e realizzazione di materiali di comunicazione offline: gift voucher, biglietto da visita, carta fedeltà, flyer e materiali promozionali.", "focus": "Concept · Visual design · Adattamento contenuti · Preparazione stampa", "pdfs": ["gift", "card", "loyalty", "camping", "promo"]}};
+
+function about(){return `<section class="hero-grid">
+<div>
+<div class="ey">Chi sono</div>
+<h2 class="editorial-title">Comunicazione, marketing e customer experience.</h2>
+<p>Sono Federica, <strong>laureanda in Intelligenza Artificiale, Impresa e Società</strong> alla IULM, con una formazione precedente in <strong>Comunicazione d’Impresa, Marketing e Digital Media</strong>.</p>
+<p>Il mio percorso unisce marketing, comunicazione, strumenti digitali, intelligenza artificiale e customer experience, con un approccio creativo ma anche operativo. Mi interessa in particolare il mondo <strong>Food & Beverage</strong>, dove brand, esperienza e cura dei dettagli si incontrano.</p>
+<p>Nei miei progetti mi piace partire dalla strategia e arrivare alla sua applicazione concreta: dalla progettazione di un’esperienza alla realizzazione dei materiali di comunicazione.</p>
+</div>
+<aside class="quote-panel">
+<div>
+<div class="ey">Approccio</div>
+<div class="mini-rule"></div>
+<div class="big-word">Strategia.<br>Esperienza.<br>Esecuzione.</div>
+</div>
+<div class="tags">Brand Experience · Customer Journey · Food & Beverage · Digital Strategy · AI</div>
+</aside>
+</section>`}
+
+function journey(){const rows=[
+['2026','MILANO','AI & Digital Strategy Intern','IFDA & ASA · CRM, chatbot, WhatsApp Business, SEO/GEO ed eventi'],
+['2024–2026','MILANO','Laurea Magistrale','Intelligenza Artificiale, Impresa e Società · IULM'],
+['2023–2024','ALICANTE','Erasmus+','Universidad de Alicante · esperienza internazionale di sei mesi'],
+['2021–2024','ROMA','Laurea Triennale','Comunicazione d’Impresa, Marketing e Digital Media · LUMSA · 109/110 e Lode']
+];return `<section class="grid"><div><div class="ey">Il mio percorso</div><h2>Un percorso tra comunicazione, digitale e AI.</h2>${rows.map(r=>`<div class="timeline"><div class="year">${r[0]}</div><div class="track"><div class="dot"></div></div><div><div class="city">${r[1]}</div><h3>${r[2]}</h3><div class="desc">${r[3]}</div></div></div>`).join('')}</div>
+<aside class="panel"><div class="ey">Esperienze internazionali</div><h2 style="font-size:30px">Alicante · Londra<br>New York · Cape Town</h2><p>Erasmus universitario e corsi di lingua all’estero che hanno arricchito il mio percorso formativo e personale.</p><div class="focus"><div class="ey">Esperienza operativa</div><p>Supporto alla comunicazione offline dal 2023, esperienza F&B in ristorazione e stage in digital strategy.</p></div></aside></section>`}
+
+function projectView(id){const p=projects[id];let media='';if(id!=='andrea') media=`<div class="preview-wrap"><img class="preview" src="${IMGS[p.thumb]}" alt="Anteprima ${p.title}"></div>`;else media=`<div class="gallery">${[
+['gift','Gift Voucher'],['card','Biglietto da visita'],['loyalty','Carta fedeltà'],['camping','Flyer campeggio'],['promo','Promo Natale']
+].map(x=>`<div class="gcard">${IMGS[x[0]]?`<img src="${IMGS[x[0]]}" alt="${x[1]}">`:''}<strong>${x[1]}</strong><button class="btn openpdf" data-pdf="${x[0]}" data-title="${x[1]}">Apri progetto →</button></div>`).join('')}</div>`;
+let actions=id==='andrea'?'':`<div class="actions"><button class="btn primary openpdf" data-pdf="${p.pdf}" data-title="${p.title}">Visualizza progetto completo →</button></div>`;
+const nums={missoni:'01',officina:'02',triplea:'03',andrea:'04'};
+return `<div class="project-layout"><aside class="project-list">${Object.entries(projects).map(([k,v])=>`<button class="project ${k===id?'active':''}" data-project="${k}"><strong>${v.title}</strong><small>${v.sub}</small></button>`).join('')}</aside><article class="project-panel"><div class="project-head"><div><div class="ey">${p.meta}</div><h2 style="font-size:35px">${p.title}</h2><div class="sub"><em>${p.sub}</em></div></div><div class="project-number">${nums[id]}</div></div>${media}<p>${p.desc}</p><div class="focus"><div class="ey">Focus</div><p style="color:var(--ink);margin:6px 0 0">${p.focus}</p></div>${actions}</article></div>`}
+
+function works(){return `<section><div class="ey">Selected Works</div><h2>Progetti</h2><div id="project-zone">${projectView('missoni')}</div></section>`}
+function contact(){return `<section class="grid"><div><div class="ey">Contatti</div><h2 class="editorial-title">Dalla strategia all’esecuzione.</h2><p>Mi interessa lavorare nei contesti in cui strategia di brand, customer experience e operatività si incontrano: dall’idea iniziale alla realizzazione concreta dei materiali di comunicazione.</p></div><aside class="contact-card"><div class="ey">Federica Pierini</div><div class="contact-name">Marketing & Brand Communication</div><div class="sub">Digital Strategy · AI · Customer Experience</div><div class="contactline">Milano · Italia<br><a href="mailto:federicapierini02@gmail.com">federicapierini02@gmail.com</a><br><a href="tel:+393930737899">+39 393 073 7899</a></div></aside></section>`}
+
+function openPdf(key,title){document.getElementById('pdfFrame').src=PDFS[key];document.getElementById('modalTitle').textContent=title;document.getElementById('pdfModal').classList.add('open');document.getElementById('pdfModal').setAttribute('aria-hidden','false')}
+function closePdf(){document.getElementById('pdfFrame').src='about:blank';document.getElementById('pdfModal').classList.remove('open');document.getElementById('pdfModal').setAttribute('aria-hidden','true');}
+function bindProjects(){document.querySelectorAll('[data-project]').forEach(b=>b.addEventListener('click',()=>{document.getElementById('project-zone').innerHTML=projectView(b.dataset.project);bindProjects();bindPdfs();}))}
+function bindPdfs(){document.querySelectorAll('.openpdf').forEach(b=>b.addEventListener('click',()=>openPdf(b.dataset.pdf,b.dataset.title)))}
+function setSection(s){document.querySelectorAll('.nav').forEach(b=>b.classList.toggle('active',b.dataset.section===s));document.getElementById('content').innerHTML=s==='about'?about():s==='journey'?journey():s==='works'?works():contact();if(s==='works'){bindProjects();bindPdfs();}}
+document.querySelectorAll('.nav').forEach(b=>b.addEventListener('click',()=>setSection(b.dataset.section)));
+document.getElementById('closeModal').addEventListener('click',closePdf);
+document.getElementById('pdfModal').addEventListener('click',e=>{if(e.target.id==='pdfModal')closePdf()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePdf()});
+setSection('about');
+</script>
+</body></html>
